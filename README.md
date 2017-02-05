@@ -1,8 +1,4 @@
 [![](https://images.microbadger.com/badges/image/shaharil/docker-kibana.svg)](https://hub.docker.com/r/shaharil/docker-kibana/)
-# Supported tags and respective `Dockerfile` links
-
-* `4.6.4`, `4.6`, `4` [(4.6/Dockerfile)](https://github.com/Khezen/docker-kibana/blob/4.6/Dockerfile)
-* `5.1.2`, `5.1`, `5`, `latest` [(5.0/Dockerfile)](https://github.com/Khezen/docker-kibana/blob/5.1/Dockerfile)
 
 # What is Kibana?
 Kibana lets you visualize your Elasticsearch data and navigate the Elastic Stack, so you can do anything from learning why you're getting paged at 2:00 a.m. to understanding the impact rain might have on your quarterly numbers.
@@ -14,7 +10,7 @@ Kibana lets you visualize your Elasticsearch data and navigate the Elastic Stack
 ## docker engine
 
 ```
-docker run -d -p 5601:5601 khezen/kibana:latest   
+docker run -d -p 80:80 -e ELASTICSEARCH_HOST=10.67.1.179 --name kibana shaharil/kibana
 ```
 
 ## docker-compose
@@ -28,58 +24,7 @@ sysctl -w vm.max_map_count=262144
 You can set it permanently by modifying `vm.max_map_count` setting in your `/etc/sysctl.conf`.
 
 ### docker-compose.yml
-```
-version: '2'
-services:
-    kibana:
-        image: khezen/kibana:5
-        environment:
-            KIBANA_PWD: changeme
-            ELASTICSEARCH_HOST: localhost
-            ELASTICSEARCH_PORT: 9200
-        volumes:
-            - /etc/kibana:/etc/kibana
-        ports:
-             - "5601:5601"
-        network_mode: bridge
-        restart: always
-```
 
-or
-
-```
-version: '2'
-services:
-    elasticsearch:
-        image: khezen/elasticsearch
-        environment:
-            ELASTIC_PWD: changeme
-            KIBANA_PWD: brucewayne
-        volumes:
-            - /data/elasticsearch:/usr/share/elasticsearch/data
-            - /etc/elasticsearch:/usr/share/elasticsearch/config 
-        ports:
-             - "9200:9200"
-             - "9300:9300"
-        network_mode: bridge
-        restart: always
-
-    kibana:
-        links:
-            - elasticsearch
-        image: khezen/kibana:5
-        environment:
-            KIBANA_PWD: brucewayne
-            ELASTICSEARCH_HOST: elasticsearch
-            ELASTICSEARCH_PORT: 9200
-        volumes:
-            - /etc/kibana:/etc/kibana
-        ports:
-             - "5601:5601"
-        network_mode: bridge
-        restart: always
-
-```
 # Environment Variables
 
 ##### KIBANA_PWD | `changeme`

@@ -24,5 +24,6 @@ server {
         proxy_pass          http://{{ ELASTICSEARCH_HOST }}:9200;
         #proxy_set_header Authorization "Basic ZWxhc3RpYzpjaGFuZ2VtZQ==";
         proxy_read_timeout  90;
-    }
+        client_max_body_size 0 ;
+	}
 }

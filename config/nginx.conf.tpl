@@ -23,4 +23,14 @@ server {
         proxy_pass          http://{{ ELASTICSEARCH_HOST }}:{{ ELASTICSEARCH_PORT }};
         proxy_read_timeout  90;
     }
+        #proxy_set_header Authorization "Basic ZWxhc3RpYzpjaGFuZ2VtZQ==";
+        client_max_body_size 0 ;
+        proxy_buffering on;
+        proxy_buffer_size 1k;
+        proxy_buffers 24 4k;
+        proxy_busy_buffers_size 8k;
+        proxy_max_temp_file_size 2048m;
+        proxy_temp_file_write_size 32k;
+
+	}
 }

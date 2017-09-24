@@ -16,13 +16,13 @@ RUN curl -s -L "https://github.com/lshahar/elasticsearch-kopf/archive/v${KOPF_VE
     tar xz -C /tmp && mv "/tmp/elasticsearch-kopf-${KOPF_VERSION}" /kopf
     
 
-RUN mkdir -p /.backup/kibana
+RUN mkdir -p /.backup/kibana / \
+    mkdir -p /usr/share/kibana/config/
 COPY config/kibana.yml /.backup/kibana/kibana.yml
 COPY config/supervisord.conf /etc/supervisord.conf
 COPY config/nginx.conf.tpl /etc/nginx/conf.d/nginx.conf.tpl
 RUN rm -f /etc/nginx/sites-enabled/default
 RUN rm -f /etc/kibana/kibana.yml
-
 ENV KIBANA_PWD="changeme" \
     ELASTICSEARCH_HOST="elasticsearch" \
     ELASTICSEARCH_PORT="9200" \
@@ -36,5 +36,6 @@ VOLUME /etc/kibana
 #ENTRYPOINT ["/run/entrypoint.sh"]
 #CMD ["kibana"]
 RUN chown 999:999 -R /usr/share/kibana
+
 
 ENTRYPOINT ["supervisord", "--nodaemon", "--configuration", "/etc/supervisord.conf"]

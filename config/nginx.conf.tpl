@@ -22,7 +22,6 @@ server {
         proxy_set_header        X-Forwarded-Proto $scheme;
         proxy_pass          http://{{ ELASTICSEARCH_HOST }}:{{ ELASTICSEARCH_PORT }};
         proxy_read_timeout  90;
-    }
         #proxy_set_header Authorization "Basic ZWxhc3RpYzpjaGFuZ2VtZQ==";
         client_max_body_size 0 ;
         proxy_buffering on;
